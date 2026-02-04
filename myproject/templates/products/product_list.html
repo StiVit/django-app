@@ -1,0 +1,19 @@
+<h1>Products</h1>
+
+<a href="{% url 'products:create' %}">Create product</a>
+
+<ul>
+  {% for product in products %}
+    <li>
+      <a href="{% url 'products:detail' product.pk %}">
+        {{ product.name }}
+      </a>
+      - £{{ product.price }}
+      {% if product.in_stock %}
+        ✅ In stock
+      {% else %}
+        ❌ Out of stock
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
