@@ -9,8 +9,8 @@ class Product(models.Model):
     amount = models.IntegerField(default=0, null=False, validators=[MinValueValidator(0)])
 
     @property
-    def in_stock():
-        return self.amout > 0
+    def in_stock(self):
+        return self.amount > 0
 
-    def __str__():
+    def __str__(self):
         return self.name
