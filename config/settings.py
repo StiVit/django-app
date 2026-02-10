@@ -132,4 +132,11 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0"
 }
 
+# Authentication logic
+
 AUTH_USER_MODEL = "authentication.User"
+
+AUTHENTICATION_BACKENDS = [
+    "apps.authentication.backends.EmailAuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
