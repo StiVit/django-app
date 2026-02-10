@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.products',
+    'apps.authentication',
     "rest_framework",
     "drf_spectacular",
 ]
@@ -130,3 +131,5 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "API documentation for the store",
     "VERSION": "1.0.0"
 }
+
+AUTH_USER_MODEL = "authentication.User"
