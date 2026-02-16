@@ -20,10 +20,15 @@ from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
 )
+from rest_framework_simplejwt.views import TokenRefreshView
+from apps.authentication.views import EmailTokenObtainPairView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("products/", include("apps.products.urls")),
+
+    # APIs
+    path("api/", include("apps.products.api_urls")),
+    path("api/", include("apps.authentication.urls")),
 
     # Schema
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
@@ -35,6 +40,11 @@ urlpatterns = [
         name="swagger-ui",
     ),
 
-    # API
-    path("api/", include("apps.products.api_urls")),
+    # Internal HTML
+    path("products/", include("apps.products.urls")),
+
+    # JWT
+    path("api/token/", EmailTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+
 ]

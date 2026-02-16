@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -120,9 +121,15 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Implement Swagger and rest API
+# Implement Swagger, rest API, JWT Auth
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASS": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
@@ -130,6 +137,12 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "E-Commerce API",
     "DESCRIPTION": "API documentation for the store",
     "VERSION": "1.0.0"
+}
+
+SIMPLE_jWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 # Authentication logic

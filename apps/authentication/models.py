@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -33,6 +34,22 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     balance = models.FloatField(default=0, validators=[MinValueValidator(0)])
+
+    def deposit(self, amount):
+        if amount <= 0:
+            raise ValidationError("Deposit amount must be positive")
+        self.balance += amount
+        self.save(update_fields=["balance"])
+
+    def withdraw(self, amount):
+        if amount <= 0:
+            raise ValidationError("Withdraw amount must be positive")
+        
+        if amount > self.balance:
+            raise ValidationError("Insuficient money")
+        
+        self.balance -= amount
+        self.save(update_fields=["balance"])
 
     objects = UserManager()
 
